@@ -7,22 +7,33 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/apps/task-management-application/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/task-management-application/test/jest-e2e.json",
+    
+    "prisma:generate": "npm run prisma:generate:user && npm run prisma:generate:task",
+    "prisma:generate:user": "prisma generate --schema=apps/user-service/prisma/schema.prisma",
+    "prisma:migrate:user": "prisma migrate dev --schema=apps/user-service/prisma/schema.prisma --name",
+    "prisma:reset:user": "prisma migrate reset --schema=apps/user-service/prisma/schema.prisma",
+
+    "prisma:generate:task": "prisma generate --schema=apps/task-service/prisma/schema.prisma",
+    "prisma:migrate:task": "prisma migrate dev --schema=apps/task-service/prisma/schema.prisma --name",
+    "prisma:studio:task": "prisma studio --schema=apps/task-service/prisma/schema.prisma",
+    "prisma:reset:task": "prisma migrate reset --schema=apps/task-service/prisma/schema.prisma"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-fastify": "^11.1.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -59,7 +70,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -67,7 +78,10 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/apps/"
+    ]
   }
 }
