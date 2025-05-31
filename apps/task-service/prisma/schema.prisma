@@ -13,3 +13,23 @@ datasource db {
   provider = "postgresql"
   url      = env("TASK_DATABASE_URL")
 }
+
+model Task {
+  id                       String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id                  String
+  title                    String              
+  description              String              
+  status                   TaskStatus          @default(ACTIVE)
+  due_date                 DateTime?           @map("due_date") @db.Timestamptz
+  createdAt                DateTime            @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt                DateTime            @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([user_id])
+  @@map("tasks")
+}
+
+enum TaskStatus {
+  ACTIVE
+  COMPLETED
+  MISSED
+}
