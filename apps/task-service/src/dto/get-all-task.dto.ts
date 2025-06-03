@@ -1,6 +1,11 @@
-import { TaskStatus } from "apps/task-service/generated/prisma";
+import { TaskStatus } from "@task/generated/prisma";
 import { Transform } from "class-transformer";
-import { IsEnum, IsNumber, IsOptional, IsString, Min } from "class-validator";
+import { IsEnum, IsNumber, IsOptional, IsString, MaxLength, Min } from "class-validator";
+
+enum ORDER {
+    ASCENDING = 'asc',
+    DESCENDING = 'desc',
+}
 
 export class GetAllTaskRequestDto {
     @IsNumber()
@@ -15,9 +20,9 @@ export class GetAllTaskRequestDto {
     @Min(0)
     limit: number;
 
-    @IsString()
+    @IsEnum(ORDER)
     @IsOptional()
-    order: string;
+    order: ORDER;
 
     @IsEnum(TaskStatus)
     @IsOptional()
@@ -25,5 +30,6 @@ export class GetAllTaskRequestDto {
 
     @IsOptional()
     @IsString()
+    @MaxLength(6)
     search?: string;
 }

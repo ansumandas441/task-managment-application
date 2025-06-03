@@ -2,9 +2,6 @@ import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class TaskUpdateDto {
     @IsString()
-    taskId: string;
-
-    @IsString()
     @IsOptional()
     title: string;
 

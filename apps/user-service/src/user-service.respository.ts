@@ -29,7 +29,7 @@ export class UserServiceRepository {
 
     return user;
     } catch (error) {
-        console.log(`UserServiceRepository::create ${error}`);
+        console.log(`UserServiceRepository::create ${error.message}`);
         return null;
     }
   }

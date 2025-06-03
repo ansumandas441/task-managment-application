@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { hashPassword, verifyPassword } from './utils/password-utils';
 import { UserServiceRepository } from './user-service.respository';
 import { JwtService } from '@nestjs/jwt';
@@ -15,14 +15,16 @@ export class UserService {
     try {
       const hashedPassword = await hashPassword(userRegisterDto.password);
 
-      const user = this.userRepository.create(userRegisterDto, hashedPassword);
+      const user = await this.userRepository.create(userRegisterDto, hashedPassword);
       if(!user) {
+        console.warn('User creation failed');
         return null;
       }
 
       return user;
     } catch (error) {
-      console.log(`UserServiceService::register ${error}`);
+      console.log(`UserService::register ${error.message}`);
+      throw new HttpException('Registration failed', HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
   }
@@ -36,7 +38,8 @@ export class UserService {
 
       const isPasswordValid = await verifyPassword(user.password_hash, userLoginDto.password)
 
-      if(!isPasswordValid){
+      if (!isPasswordValid) {
+        console.warn('Invalid password');
         return null;
       }
 
@@ -52,9 +55,9 @@ export class UserService {
         accessToken: jwtToken
       }
 
-      return user;
     } catch (error) {
-      console.log(`UserServiceService::register ${error}`);
+      console.log(`UserService::login ${error}`);
+      throw new HttpException('Login failed', HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
   }

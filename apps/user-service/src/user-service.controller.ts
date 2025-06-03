@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Req, Res } from '@nestjs/common';
 import { UserService } from './user-service.service';
 import { UserLoginDto, UserRegisterDto } from './dto/auth.dto';
 
@@ -29,9 +29,4 @@ export class UserServiceController {
 
     return result;
   }
-
-  // @Post('logout')
-  // logout() {
-
-  // }
 }

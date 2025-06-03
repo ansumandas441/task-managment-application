@@ -1,5 +1,4 @@
-import { TaskStatus } from "apps/task-service/generated/prisma";
-import { IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class TaskDto {
     @IsString()
@@ -8,9 +7,6 @@ export class TaskDto {
     @IsString()
     @IsOptional()
     description: string;
-
-    @IsEnum(TaskStatus)
-    status: TaskStatus;
 
     @IsNumber()
     dueDate: number; //In seconds
