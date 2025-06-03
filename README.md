@@ -71,6 +71,21 @@ $ mau deploy
 
 With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
+
+## Architecture Diagram:
+
+![Untitled-2025-06-03-2033(1)](https://github.com/user-attachments/assets/c7a926b8-d71a-490b-96ba-75b090f3ad60)
+
+## Database Schema:
+
+![Untitled](https://github.com/user-attachments/assets/68c44e45-1597-47a4-9525-4b0621e9d246)
+
+## Sequence Diagram:
+
+![Untitled Diagram](https://github.com/user-attachments/assets/3e0faeb8-80db-4f93-82b1-e48f8172949d)
+
+
+
 ## Resources
 
 Check out a few resources that may come in handy when working with NestJS:
