@@ -193,15 +193,19 @@ This architectural approach ensures the application can scale horizontally acros
 ## Assumptions
 
 #### User behaviour:
+```
 - Average Tasks per User: 20 tasks
 - Daily Active Users: 40% of total users
 - Peak Traffic: 3x average
 - Login Sessions: 2 times/day
+```
 
 #### Read/Write Ratios
+```
 - User Service: 10:1 (Login:Signup ratio)
 - Task Service: 20:1 (Read:Write ratio)
-- Notification Service: Processing heavy 
+- Notification Service: Processing heavy
+```
 
 ## Calculations
 
