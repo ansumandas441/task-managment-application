@@ -94,7 +94,7 @@ Current implementation uses a simplified logout mechanism where the frontend dir
 
 #### Reduced Access Token Expiry: 
 Shorter-lived access tokens minimize security exposure
-Refresh Token Implementation: Separate refresh tokens would enable controlled session management
+Refresh Token Implementation: Separate refresh tokens would enable controlled session management, although it is not provided in the current implementation
 Implicit Session Termination: Token expiration provides automatic logout functionality
 
 ### User Service Architecture
@@ -283,7 +283,8 @@ MUltiple pods of each service, more read replicas for the db and sharded db base
 
 ##  Improvements:
 
-There are several improvements that can be done for mitigating failure scenarios. We can use circuit breaker pattern and throttling/rate limiting so that our server do not get over burdened and shuts down.
+There are several improvements that can be done for mitigating failure scenarios. We can use circuit breaker pattern and throttling/rate limiting so that our server do not get over burdened and shuts down. 
+Refresh tokens can be added for real time token authentication renew mechanism, also we can use HAproxy and API gateway for traffic routing, but in this project it is not implemented.
 
 
 
