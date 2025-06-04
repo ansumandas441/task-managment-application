@@ -26,10 +26,10 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
+## Docker run the project
 
-```bash
-$ npm install
+```
+docker compose up -d
 ```
 
 ## Compile and run the project
@@ -50,9 +50,6 @@ $ npm run start:prod
 ```bash
 # unit tests
 $ npm run test
-
-# e2e tests
-$ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
@@ -83,6 +80,12 @@ With Mau, you can deploy your application in just a few clicks, allowing you to 
 ## Sequence Diagram:
 
 ![Untitled Diagram](https://github.com/user-attachments/assets/3e0faeb8-80db-4f93-82b1-e48f8172949d)
+
+
+## Deployment Diagrams
+
+## Design Choices Documentation:
+
 
 
 
