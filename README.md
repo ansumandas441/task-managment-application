@@ -39,9 +39,9 @@ https://drive.google.com/file/d/17ME5_kC0iDFGcYiXLs85kmCrAXuIQmHW/view?usp=shari
 $ npm run test
 ```
 
-## Deployment and run
+## yment and run
 
-### Prerequisited:
+### Prerequisit:
 
 create the .env file by copying the infor from .env.example
 
@@ -66,6 +66,17 @@ With Mau, you can deploy your application in just a few clicks, allowing you to 
 
 
 ## Deployment Diagrams
+
+Docker Containerization Strategy
+The application is deployed using a multi-container Docker architecture with Docker Compose orchestration. Each service is containerized independently to enable isolated deployment, scaling, and maintenance.
+
+### Deployment Diagram
+
+![Screenshot from 2025-06-04 06-58-43](https://github.com/user-attachments/assets/8395b493-984f-4dae-b1bd-47c42904ceca)
+
+![Screenshot from 2025-06-04 07-00-47](https://github.com/user-attachments/assets/7bbfe17d-bc4b-45a1-9e0e-5e2d21f5ed2e)
+![Screenshot from 2025-06-04 07-00-33](https://github.com/user-attachments/assets/30f93107-10b6-4418-bbdf-f2f7a6d85c2e)
+
 
 ## Design Choices Documentation:
 
