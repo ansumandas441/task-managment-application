@@ -190,7 +190,94 @@ Clear boundaries between authentication, task management, and notification conce
 
 This architectural approach ensures the application can scale horizontally across all services while maintaining data consistency and operational reliability.
 
-###  Improvements:
+## Assumptions
+
+#### User behaviour:
+- Average Tasks per User: 20 tasks
+- Daily Active Users: 40% of total users
+- Peak Traffic: 3x average
+- Login Sessions: 2 times/day
+
+#### Read/Write Ratios
+- User Service: 10:1 (Login:Signup ratio)
+- Task Service: 20:1 (Read:Write ratio)
+- Notification Service: Processing heavy 
+
+## Calculations
+
+### Small Scale(1000 users)
+
+#### Traffic:
+```
+Daily Active Users: 1,000 × 40% = 400 users
+Peak Concurrent Users: 400 × 20% = 80 users
+Login Operations: 400 × 2 = 800 logins/day
+Task Operations: 400 × 8 = 3,200 ops/day
+Peak Task Operations: 3,200 × 3 ÷ 8 hours = 1,200 ops/hour = 0.33 ops/sec
+Peak Login Operations: 800 × 3 ÷ 8 hours = 300 logins/hour = 0.08 logins/sec
+```
+
+#### Storage requirements:
+```
+User Data: 1,000 users × 500 bytes = 500 KB
+Task Data: 1,000 × 20 × 2 KB = 40 MB
+Database Growth: ~2 MB/month
+Redis Cache: 40 MB × 85% = 34 MB
+```
+
+Small cache, 1 pod each and 1 db suffices
+
+### Medium Scale(100,000 users)
+
+#### Traffic:
+
+```
+Daily Active Users: 100,000 × 40% = 40,000 users
+Peak Concurrent Users: 40,000 × 20% = 8,000 users
+Login Operations: 40,000 × 2 = 80,000 logins/day
+Task Operations: 40,000 × 8 = 320,000 operations/day
+Peak Task Operations: 320,000 × 3 ÷ 8 hours = 120,000 ops/hour = 33.3 ops/sec
+Peak Login Operations: 80,000 × 3 ÷ 8 hours = 30,000 logins/hour = 8.3 logins/sec
+```
+
+#### Storage requirements:
+
+```
+User Data: 100,000 users × 500 bytes = 50 MB
+Task Data: 100,000 × 20 × 2 KB = 4 GB
+Database Growth: ~200 MB/month
+Redis Cache: 4 GB × 90% = 3.6 GB
+Total Database Size: ~5 GB
+```
+
+More replicas of pods, having 2-3 read replicas for db and larger cache is needed
+
+### Large Scale(1 million users)
+
+#### Traffic:
+
+```
+Daily Active Users: 1,000,000 × 40% = 400,000 users
+Peak Concurrent Users: 400,000 × 20% = 80,000 users
+Login Operations: 400,000 × 2 = 800,000 logins/day
+Task Operations: 400,000 × 8 = 3,200,000 operations/day
+Peak Task Operations: 3,200,000 × 3 ÷ 8 hours = 1,200,000 ops/hour = 333 ops/sec
+Peak Login Operations: 800,000 × 3 ÷ 8 hours = 300,000 logins/hour = 83 logins/sec
+```
+
+#### Storage requirements:
+
+```
+User Data: 1,000,000 users × 500 bytes = 500 MB
+Task Data: 1,000,000 × 20 × 2 KB = 40 GB
+Database Growth: ~2 GB/month
+Redis Cache: 40 GB × 95% = 38 GB
+Total Database Size: ~50 GB
+```
+
+MUltiple pods of each service, more read replicas for the db and sharded db based on the userId, bigger cache and having master slave architecture(with multiple replicas) is needed
+
+##  Improvements:
 
 There are several improvements that can be done for mitigating failure scenarios. We can use circuit breaker pattern and throttling/rate limiting so that our server do not get over burdened and shuts down.
 
