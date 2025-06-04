@@ -168,7 +168,7 @@ Load Distribution: Enables graceful handling of high notification volumes
 Batch Processing Capability: Supports efficient bulk notification processing for high-traffic scenarios
 
 #### Service Resilience
-The notification architecture ensures continued operation despite failures:
+The notification architecture ensures continued operation despite failures
 
 #### Independent Scaling: 
 Notification service pods scale based on processing demand
@@ -189,6 +189,10 @@ Modular structure facilitates unit testing and mocking
 Clear boundaries between authentication, task management, and notification concerns
 
 This architectural approach ensures the application can scale horizontally across all services while maintaining data consistency and operational reliability.
+
+###  Improvements:
+
+There are several improvements that can be done for mitigating failure scenarios. We can use circuit breaker pattern and throttling/rate limiting so that our server do not get over burdened and shuts down.
 
 
 
