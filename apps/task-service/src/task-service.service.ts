@@ -27,7 +27,7 @@ export class TaskService {
 
       console.log(`Task created successfully`);
 
-      await this.notifyAndInvalidateCache(userId, NOTIFICATION_TYPE.TASK_CREATED, task.title); 
+      await this.notifyAndInvalidateCache(userId, 'null', NOTIFICATION_TYPE.TASK_CREATED, task.title); 
 
       return task
     } catch (error) {
@@ -54,7 +54,7 @@ export class TaskService {
 
       console.log(`Task updated successfully`);
 
-      await this.notifyAndInvalidateCache(userId, NOTIFICATION_TYPE.TASK_UPDATED, updatedTask.title); 
+      await this.notifyAndInvalidateCache(userId, updatedTask.id, NOTIFICATION_TYPE.TASK_UPDATED, updatedTask.title); 
 
       return updatedTask;
     } catch (error) {
@@ -82,7 +82,7 @@ export class TaskService {
 
       console.log(`Task updated successfully`);
 
-      await this.notifyAndInvalidateCache(userId, NOTIFICATION_TYPE.TASK_COMPLETED, updatedTask.title); 
+      await this.notifyAndInvalidateCache(userId, updatedTask.id, NOTIFICATION_TYPE.TASK_COMPLETED, updatedTask.title); 
 
       return updatedTask;
     } catch (error) {
@@ -161,7 +161,7 @@ export class TaskService {
 
       console.log(`Task deleted successfully`);
 
-      await this.notifyAndInvalidateCache(userId, NOTIFICATION_TYPE.TASK_DELETED, deletedTask.title); 
+      await this.notifyAndInvalidateCache(userId, deletedTask.id, NOTIFICATION_TYPE.TASK_DELETED, deletedTask.title); 
 
       return deletedTask;
     } catch (error) {
@@ -170,14 +170,16 @@ export class TaskService {
     }
   }
 
-  private async notifyAndInvalidateCache(userId: string, notificationType: NOTIFICATION_TYPE, taskTitle: string) {
+  private async notifyAndInvalidateCache(userId: string, taskId: string, notificationType: NOTIFICATION_TYPE, taskTitle: string) {
     const pattern = this.cachearaepo.userCacheKeyPatterns(userId);
+    const singleKey = this.cachearaepo.getSingleTaskCacheKey(userId, taskId);
 
     const notification = this.createTaskNotification(userId, notificationType, taskTitle);
 
     await Promise.all([
       this.kafkaService.sendNotification(notification),
       this.cachearaepo.deleteByPattern(pattern),
+      this.cachearaepo.delete(singleKey),
     ]);
   }
 

@@ -50,7 +50,7 @@ export class CacheRepoService {
   }
 
   getSingleTaskCacheKey(userId: string, taskId: string): string {
-    return `task:${userId}:${taskId}`;
+    return `task:userId=${userId}:taskId=${taskId}`;
   }
 
   getAllTaskCacheKey(userId: string, getAllTaskDto: GetAllTaskRequestDto): string {
