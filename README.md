@@ -41,6 +41,10 @@ $ npm run test
 
 ## Deployment and run
 
+### Prerequisited:
+
+create the .env file by copying the infor from .env.example
+
 ```
 docker compose up -d
 ```
