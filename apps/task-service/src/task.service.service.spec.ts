@@ -23,6 +23,7 @@ const mockCacheService = {
   get: jest.fn(),
   set: jest.fn(),
   deleteByPattern: jest.fn(),
+  delete: jest.fn(),
   getSingleTaskCacheKey: jest.fn().mockImplementation((uid, tid) => `task:${uid}:${tid}`),
   getAllTaskCacheKey: jest.fn().mockImplementation((uid) => `tasks:${uid}`),
   userCacheKeyPatterns: jest.fn().mockImplementation((uid) => [`task:${uid}:*`, `tasks:${uid}`]),
@@ -54,6 +55,7 @@ describe('TaskService', () => {
     expect(result).toEqual(mockTask);
     expect(mockKafkaService.sendNotification).toHaveBeenCalled();
     expect(mockCacheService.deleteByPattern).toHaveBeenCalled();
+    expect(mockCacheService.delete).toHaveBeenCalled();
   });
 
   it('should update a task and send notification', async () => {

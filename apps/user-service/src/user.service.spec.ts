@@ -100,11 +100,12 @@ describe('UserService', () => {
       expect(result).toEqual({ accessToken: 'mock-token' });
     });
 
-    it('should return null if user is not found', async () => {
+    it('should throw 404 if user is not found', async () => {
       repository.findByEmailAddress.mockResolvedValue(null);
 
-      const result = await service.login({ email: 'none', password: '123' });
-      expect(result).toBeNull();
+      await expect(service.login({ email: 'none', password: '123' }))
+        .rejects
+        .toThrowError(new HttpException('Account with this email does not exist', HttpStatus.NOT_FOUND));
     });
 
     it('should return null if password is invalid', async () => {
