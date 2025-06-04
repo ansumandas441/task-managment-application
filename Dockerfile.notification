@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build:notification:service
+
+EXPOSE 3002
 
 CMD ["npm", "run", "start:notification:service:prod"]

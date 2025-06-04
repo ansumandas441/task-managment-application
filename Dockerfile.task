@@ -8,7 +8,9 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3001
+
+RUN chmod +x /app/scripts/task_run.sh
 
 
-CMD ["/scripts/task_run.sh"]
+CMD ["/app/scripts/task_run.sh"]

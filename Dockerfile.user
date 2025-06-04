@@ -8,8 +8,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm build:notification:
-
 EXPOSE 3000
 
-CMD ["/scripts/user_run.sh"]
+RUN chmod +x /app/scripts/user_run.sh
+
+CMD ["/app/scripts/user_run.sh"]

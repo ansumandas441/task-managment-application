@@ -4,6 +4,11 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(NotificationServiceModule, new FastifyAdapter());
-  await app.listen(process.env.NOTIFICATION_SERVICE_PORT ?? 3000);
+    const port = process.env.NOTIFICATION_SERVICE_PORT ?? 3002;
+  const host = '0.0.0.0';
+
+  await app.listen(port, host, ()=>{
+    console.log(`🚀 User service running on http://${host}:${port}`);
+  });
 }
 bootstrap();

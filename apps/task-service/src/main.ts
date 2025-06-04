@@ -12,6 +12,12 @@ async function bootstrap() {
   );
 
   app.setGlobalPrefix('tasks');
-  await app.listen(process.env.TASK_SERVICE_PORT ?? 3000);
+
+  const port = process.env.TASK_SERVICE_PORT ?? 3001;
+  const host = '0.0.0.0';
+
+  await app.listen(port, host, ()=>{
+    console.log(`🚀 User service running on http://${host}:${port}`);
+  });
 }
 bootstrap();

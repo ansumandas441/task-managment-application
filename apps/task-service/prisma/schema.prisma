@@ -25,6 +25,8 @@ model Task {
   updatedAt                DateTime            @updatedAt @map("updated_at") @db.Timestamptz
 
   @@index([user_id])
+  @@index([user_id, status])
+  @@index([id, user_id])  
   @@map("tasks")
 }
 

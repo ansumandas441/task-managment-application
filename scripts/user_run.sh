@@ -1,7 +1,9 @@
-npm prisma:generate:user
+#!/bin/sh
+
+npm run prisma:generate:user
 
 npm run prisma:migrate:user init
 
-npm build:user:service
+npm run build:user:service
 
 npm run start:user:service:prod

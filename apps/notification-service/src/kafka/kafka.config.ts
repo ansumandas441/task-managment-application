@@ -12,7 +12,7 @@ export class KafkaConfig {
   private consumer: Consumer;
 
   constructor(private configService: ConfigService) {
-    const brokers = this.configService.get<string>('KAFKA_BROKERS', 'localhost:9092').split(',');
+    const brokers = this.configService.get<string>('KAFKA_BROKERS', 'kafka:9092').split(',');
 
     this.kafka = new Kafka({
       clientId: CLIENT_ID,

@@ -1,7 +1,9 @@
-npm prisma:generate:task
+#!/bin/sh
 
-npm run prisma:migrate:task init
+npm run prisma:generate:task
 
-npm build:task:service
+npm run prisma:migrate:task:deploy init
+
+npm run build:task:service
 
 npm run start:task:service:prod
