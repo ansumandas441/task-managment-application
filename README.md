@@ -86,7 +86,7 @@ With Mau, you can deploy your application in just a few clicks, allowing you to 
 
 ## Design Choices Documentation:
 
-# Authentication Strategy
+### Authentication Strategy
 JWT Token-Based Authentication
 The application implements JWT (JSON Web Token) authentication to eliminate server-side session storage requirements. This design choice addresses several architectural concerns:
 
@@ -101,7 +101,7 @@ Reduced Access Token Expiry: Shorter-lived access tokens minimize security expos
 Refresh Token Implementation: Separate refresh tokens would enable controlled session management
 Implicit Session Termination: Token expiration provides automatic logout functionality
 
-User Service Architecture
+### User Service Architecture
 Database Design and Constraints
 The user service implements strategic database constraints to ensure data integrity:
 
@@ -123,7 +123,7 @@ Explicit Email Validation: Separate existence check provides clear user feedback
 Enhanced User Experience: Prioritizes user-friendly error messages over database efficiency
 Acceptable Performance Trade-off: Two database calls acceptable given lower frequency of user operations
 
-Task Service Architecture
+### Task Service Architecture
 Caching Strategy
 Redis caching implementation addresses the read-heavy nature of task operations:
 
@@ -145,7 +145,7 @@ Database-Level Validation: Leverages PostgreSQL's efficient constraint handling
 Reduced API Calls: Eliminates pre-validation checks in favor of direct operations
 Error-Driven Flow: Allows database errors to drive validation logic for non-user-facing operations
 
-Notification Service Architecture
+### Notification Service Architecture
 Asynchronous Processing
 Notification delivery is designed as a non-blocking operation:
 
@@ -166,7 +166,7 @@ Independent Scaling: Notification service pods scale based on processing demand
 Fault Tolerance: Message queue prevents data loss during service interruptions
 Flexible Output: Current implementation supports logging with future integration capability for services like Amazon SNS
 
-Code Architecture Principles
+### Code Architecture Principles
 Modular Design
 The NestJS implementation emphasizes maintainable code structure:
 
