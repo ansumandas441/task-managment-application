@@ -13,6 +13,12 @@ export class UserService {
 
   async register(userRegisterDto: UserRegisterDto) {
     try {
+      const existingUser = await this.userRepository.findByEmailAddress(userRegisterDto.email);
+      if(existingUser) {
+        console.log('Existing email address, could not register');
+        throw new HttpException('Account already exists for this email id', HttpStatus.CONFLICT);
+      }
+
       const hashedPassword = await hashPassword(userRegisterDto.password);
 
       const user = await this.userRepository.create(userRegisterDto, hashedPassword);
@@ -24,6 +30,9 @@ export class UserService {
       return user;
     } catch (error) {
       console.log(`UserService::register ${error.message}`);
+      if(error.status === HttpStatus.CONFLICT){
+        throw error;
+      }
       throw new HttpException('Registration failed', HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -33,7 +42,7 @@ export class UserService {
     try {
       const user = await this.userRepository.findByEmailAddress(userLoginDto.email);
       if(!user) {
-        return null;
+        throw new HttpException('Account with this email does not exist', HttpStatus.NOT_FOUND);
       }
 
       const isPasswordValid = await verifyPassword(user.password_hash, userLoginDto.password)
@@ -57,6 +66,9 @@ export class UserService {
 
     } catch (error) {
       console.log(`UserService::login ${error}`);
+      if(error.status === HttpStatus.NOT_FOUND) {
+        throw error;
+      }
       throw new HttpException('Login failed', HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
