@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project involves task management application services following mono-repo pattern. Each service can be independently deployed.
 
 ## Postman Collection
 
